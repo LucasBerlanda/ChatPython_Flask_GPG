@@ -18,24 +18,29 @@ def chat(id):
     idDestinatario = destinatario.id
 
     if destinatario:
-        
+        #pega as mensagens do banco decripta e joga pra tela
         MensagensBanco = db.session.query(Mensagem).from_statement(text("SELECT * FROM mensagem where msg_by=msg_by and msg_to=msg_to or msg_by=msg_to and msg_to=msg_by")).params(msg_by=idLogado, msg_to=idDestinatario).all()
         chatsMensagem = decriptString(MensagensBanco)
-        form = MessageForm()
+        # form = MessageForm()
     
-        if form.validate_on_submit():
-        
-            texto = form.body.data
+        if request.method == "POST":
+            #pega msg
+            texto = (request.form.get("msg"))
+            
+            # faz o encript chamando o metodo
             encr = encriptString(texto)
+            #seta os valores para inserir no banco
             msg = Mensagem(body=encr, msg_by=idLogado, msg_to=destinatario.id)
             db.session.add(msg)
             db.session.commit()
         
+            #pega as mensagens do banco e em seguida faz o decript e joga pra tela
             MensagensBanco = db.session.query(Mensagem).from_statement(text("SELECT * FROM mensagem where msg_by= msg_by and msg_to=msg_to or msg_by= msg_to and msg_to=msg_by")).params(msg_by=idLogado, msg_to=idDestinatario).all()
             chatsMensagem = decriptString(MensagensBanco)
-            return render_template("chat.html", form=form, destinatario=destinatario, chatsMensagem=chatsMensagem)
+            
+            return render_template("chat.html", destinatario=destinatario, chatsMensagem=chatsMensagem)
     
-        return render_template("chat.html", form=form, destinatario=destinatario, chatsMensagem=chatsMensagem)
+        return render_template("chat.html", destinatario=destinatario, chatsMensagem=chatsMensagem)
 
 
     
