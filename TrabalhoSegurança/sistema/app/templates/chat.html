@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<div class="col-xs-12">
+    <div class="col-xs-4" style="background-color: #f5f5f5;margin: 0px 10px;border-radius: 4px; padding: 10px 20px 20px 20px;">
+        <div style="text-align: center;font-size: 18px;background-color: #ddd;border-radius: 4px;color: #5e5fa4;margin-bottom: 8px;">
+            <span>{{ destinatario.name}}</span>
+        </div>
+        {% for message in chatsMensagem %}
+            {% if message.msg_to == destinatario.id and message.msg_by == current_user.id or message.msg_to == current_user.id  and message.msg_by == destinatario.id %}
+                {% if (message.msg_by or message.msg_to) != destinatario.id %}
+                    <div class="" style="text-align:right; padding:2px 5px;">
+                        <p>
+                            <span class="" style="background-color: #28a7ab;color: #fff;margin: 1px 0;padding: 6px 12px; border-radius: 12px;"> {{message.body}}</span>
+                        </p>
+                    </div>
+                {% else %}
+                <div class="" style="text-align:left; padding:2px 5px;">
+                    <p>
+                        <span class="" style="background-color: #dd92b2;color: #fff;margin: 1px 0;padding: 6px 12px; border-radius: 12px;"> {{message.body}}</span>
+                    </p>
+                </div>
+                {% endif %}
+
+            {% endif %}       
+        {% endfor %}
+        <div class="col-xs-5">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p> 
+                <input type="hidden" name="destinatario" value="{{ destinatario.id }}">    
+                    {{ form.body }}
+                </p>   
+                <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+            </form>
+        </div>    
+    </div>
+</div>
+{% endblock %}

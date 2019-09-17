@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-1"></div>
+        <div class="col-xs-4" style="background-color: #f5f5f5;margin: 0px 10px;border-radius: 4px; padding: 10px 20px 20px 20px;">
+            <div style="text-align: center;font-size: 18px;background-color: #ddd;border-radius: 4px;color: #5e5fa4;margin-bottom: 8px;">
+                <span>Users Chart</span>
+            </div>
+            <ul class="list-group">
+                {% for user in users %}
+                    {% if user.id != current_user.id %}    
+                        <li class="list-group-item"><a href="/chat/{{ user.id }}"> {{user.name}} </a>
+                            {% if user.status == 1 %}
+                                <span style="height: 12px;width: 12px;background-color: #1fc124;border-radius: 6px;
+                                float: right;margin-top: 5px;"></span>
+                            {% else %}
+                                <span style="height: 12px;width: 12px;background-color: #8a8a8a;border-radius: 6px;
+                                float: right;margin-top: 5px;"></span>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endblock %}

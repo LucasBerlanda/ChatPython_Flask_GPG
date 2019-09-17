@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lista Usuários</h1>
+    
+    <table class="table table-bordered table-hover">
+        <tr>
+            <td>#</td>
+            <td>Nome</td>
+            <td>Usuario</td>
+            <td>Email</td>
+            <td>Status</td>
+        </tr>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.name }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>
+                {% if usuario.status == 1 %}
+                <span style="height: 12px;width: 12px;background-color: #1fc124;border-radius: 6px;
+                float: right;margin-top: 5px;"></span>
+                {% else %}
+                <span style="height: 12px;width: 12px;background-color: #8a8a8a;border-radius: 6px;
+                float: right;margin-top: 5px;"></span>
+                {% endif %}
+            </td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
