@@ -1,44 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Registrar</h1>
+    <h1 class="text-center">Registrar usuário</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(size=32) }}<br>
-            {% for erro in form.username.errors %}
-            <span style="color: red;">{{ erro }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}<br>
-            {% for erro in form.username.errors %}
-            <span style="color: red;">{{ erro }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for erro in form.username.errors %}
-            <span style="color: red;">{{ erro }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for erro in form.password.errors %}
-            <span style="color: red;">{{ erro }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=32) }}<br>
-            {% for erro in form.password2.errors %}
-            <span style="color: red;">{{ erro }}</span>
-            {% endfor %}
-        </p>
-        <button type="submit" class="btn btn-default">Salvar</button>
+        <div class="col-xs-12 col-sm-5">
+            <div class="col-xs-10 col-sm-12">
+                <div class="form-group">
+                    {{ form.name.label }}<br>
+                    {{ form.name(size=32, class="form-control", placeholder="Nome") }}<br>
+                    {% for erro in form.username.errors %}
+                    <span style="color: red;">{{ erro }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xs-10 col-sm-12">
+                <div class="form-group">    
+                    {{ form.email.label }}<br>
+                    {{ form.email(size=32, class="form-control", placeholder="Email") }}<br>
+                    {% for erro in form.username.errors %}
+                    <span style="color: red;">{{ erro }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xs-10 col-sm-12">
+                <div class="form-group">                
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32, class="form-control", placeholder="Usuário" ) }}<br>
+                    {% for erro in form.username.errors %}
+                    <span style="color: red;">{{ erro }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xs-10 col-sm-12">
+                <div class="form-group">
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32, class="form-control", placeholder="Senha") }}<br>
+                    {% for erro in form.password.errors %}
+                    <span style="color: red;">{{ erro }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xs-10 col-sm-12">
+                <div class="form-group">        
+                    {{ form.password2.label }}<br>
+                    {{ form.password2(size=32, class="form-control", placeholder="Confimação de senha") }}<br>
+                    {% for erro in form.password2.errors %}
+                    <span style="color: red;">{{ erro }}</span>
+                    {% endfor %}
+                </div>
+            </div>    
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </div>    
     </form>
 {% endblock %}

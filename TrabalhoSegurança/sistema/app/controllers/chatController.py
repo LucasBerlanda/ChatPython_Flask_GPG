@@ -35,7 +35,7 @@ def chat(id):
             db.session.commit()
         
             #pega as mensagens do banco e em seguida faz o decript e joga pra tela
-            MensagensBanco = db.session.query(Mensagem).from_statement(text("SELECT * FROM mensagem where msg_by= msg_by and msg_to=msg_to or msg_by= msg_to and msg_to=msg_by")).params(msg_by=idLogado, msg_to=idDestinatario).all()
+            MensagensBanco = db.session.query(Mensagem).from_statement(text("SELECT * FROM mensagem where msg_by=msg_by and msg_to=msg_to or msg_by= msg_to and msg_to=msg_by")).params(msg_by=idLogado, msg_to=idDestinatario).all()
             chatsMensagem = decriptString(MensagensBanco)
             
             return render_template("chat.html", destinatario=destinatario, chatsMensagem=chatsMensagem)
@@ -52,15 +52,15 @@ def encriptString(msg):
 
     return encrypted_string
     
-def decriptString(objeto):
+def decriptString(objetoMsg):
     gpg = gnupg.GPG()
     
     msgTela = []
     
-    for msg in objeto:
-        unencrypted_string = msg.body
-        decrypted_data = gpg.decrypt(unencrypted_string, passphrase='minhasenha')
-        texto = decrypted_data
-        msgTela.append(Mensagem(texto, msg.msg_by , msg.msg_to))
+    for msg in objetoMsg:
+        #unencrypted_string = msg.body
+        decrypted_data = gpg.decrypt(msg.body, passphrase='minhasenha')
+
+        msgTela.append(Mensagem(decrypted_data, msg.msg_by , msg.msg_to))
     
     return msgTela

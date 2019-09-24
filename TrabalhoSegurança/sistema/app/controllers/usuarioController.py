@@ -27,39 +27,3 @@ def listaUsuarios():
     
     return render_template("usuario/lista.html", usuarios = usuarios)
 
-@app.route("/editarUsuario/<int:id>", methods=['GET', 'POST'])
-@login_required
-def editarUsuario(id):
-        usuario = Usuario.query.filter_by(id = id).first()
-        perfisAcesso = PerfilAcesso.query.all()
-        setores = Setor.query.all()
-        
-        if request.method == "POST":
-                username = (request.form.get("username"))
-                setor_id = (request.form.get("setor_id"))
-                perfilAcesso_id = (request.form.get("perfilAcesso_id"))
-                
-                if username and setor_id and perfilAcesso_id:
-                        usuario.username = username
-                        usuario.setor_id = setor_id
-                        usuario.perfilAcesso_id = perfilAcesso_id
-                        
-                        db.session.commit()
-                        db.session.close()
-                        
-                        return redirect(url_for("listaUsuarios"))
-        
-        return render_template("usuario/editar.html", usuario = usuario, perfisAcesso = perfisAcesso, setores = setores)
-
-
-@app.route("/excluirUsuario/<int:id>")
-@login_required
-def excluirUsuario(id):
-    usuario = Usuario.query.filter_by(id = _id).first()
-      
-    db.session.delete(usuario)
-    db.session.commit()
-    
-    usuarios = Usuario.query.all()
-    
-    return render_template("setor/lista.html", usuarios = usuarios)
