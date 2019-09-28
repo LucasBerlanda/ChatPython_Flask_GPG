@@ -16,7 +16,7 @@ def cadastroUsuario():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Parabéns, cadastro realizado com sucesso!')
+        flash('Parabéns, cadastro realizado com sucesso!', 'info')
         return redirect(url_for('index'))
     return render_template('usuario/registrar.html', title='Register', form=form)
 

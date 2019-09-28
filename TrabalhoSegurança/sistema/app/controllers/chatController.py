@@ -1,14 +1,10 @@
 from flask import render_template, url_for, redirect, request, flash 
 from app import app, db
-from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Usuario, Mensagem
-from werkzeug.urls import url_parse
-from app.forms import MessageForm
 from sqlalchemy import text, select, or_, and_
 import gnupg
-import shutil
-import os
+
 
 @app.route('/chat/<int:id>', methods=['GET', 'POST'])
 def chat(id):
@@ -37,7 +33,8 @@ def chat(id):
             #pega as mensagens do banco e em seguida faz o decript e joga pra tela
             MensagensBanco = db.session.query(Mensagem).from_statement(text("SELECT * FROM mensagem where msg_by=msg_by and msg_to=msg_to or msg_by= msg_to and msg_to=msg_by")).params(msg_by=idLogado, msg_to=idDestinatario).all()
             chatsMensagem = decriptString(MensagensBanco)
-            
+
+            flash('Mensagem enviada com sucesso!', 'info')
             return render_template("chat.html", destinatario=destinatario, chatsMensagem=chatsMensagem)
     
         return render_template("chat.html", destinatario=destinatario, chatsMensagem=chatsMensagem)

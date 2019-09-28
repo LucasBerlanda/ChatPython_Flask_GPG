@@ -65,15 +65,46 @@
             </nav>
         </div>
        
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for msg in messages %}
-            <li class="col-xs-12" style="list-style-type: none;"><div class="alert alert-danger text-center" role="alert">{{ msg }}</div></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+        {% with msgError = get_flashed_messages(category_filter=["error"]) %}
+		{% if msgError %}
+			<div class="">
+				<ul>
+					{% for msg in msgError %}
+						<li class="col-xs-12" style="list-style-type: none;">
+							<div class="alert alert-danger text-center" role="alert">
+								<strong>{{ msg }}
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</strong>
+
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+	{% endwith %}
+
+	{% with msgSuccess = get_flashed_messages(category_filter=["info"]) %}
+		{% if msgSuccess %}
+			<div class="">
+				<ul>
+					{% for msg in msgSuccess %}
+						<li class="col-xs-12" style="list-style-type: none;">
+							<div class="alert alert-success text-center" role="alert">
+								<strong>{{ msg }}
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</strong>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+	{% endwith %}
         
         {% block content %}
         <h3>{{ current_user.login }}</h3>
